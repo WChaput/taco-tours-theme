@@ -1,5 +1,8 @@
 name: CI
 on: [push]
+permissions:
+  contents: read
+  checks: write
 jobs:
   theme-check:
     name: Theme Check
@@ -7,6 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Theme Check
-        uses: shopify/theme-check-action@v2
-        with:
-          token: ${{ github.token }}
+        # theme-check-action@v2 truena con "e.filter is not a function"; se corre el CLI directo
+        run: |
+          gem install theme-check --no-document
+          export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+          theme-check --fail-level error .
