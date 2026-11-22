@@ -123,7 +123,7 @@
 }
 </script>
 
-{{ 'taco-calendar.js' | asset_url | script_tag }}
+<script src="{{ 'taco-calendar.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
